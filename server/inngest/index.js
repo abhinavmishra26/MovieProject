@@ -1,4 +1,5 @@
 import { Inngest } from "inngest";
+import User from "../model/User.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "my-app" });
