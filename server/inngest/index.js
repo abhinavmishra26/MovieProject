@@ -1,5 +1,6 @@
 import { Inngest } from "inngest";
 import User from "../model/User.js";
+import connectDB from "../config/db.js"; 
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "movie-ticket-booking" });
@@ -8,6 +9,7 @@ const syncUserCreation=inngest.createFunction(
     {id:"sync-user-from-clerk"},
     {event:"clerk/user.created"},
     async({event})=>{
+         await connectDB();
         const {id, first_name , last_name ,email_addresses, image_url}=event.data
     const userData={
         _id: id,
@@ -16,6 +18,7 @@ const syncUserCreation=inngest.createFunction(
         image:image_url
     }
     await User.create(userData)
+    return { status: "success" };
     }
 
 )
@@ -25,7 +28,6 @@ const syncUserDeletion=inngest.createFunction(
     {event:"clerk/user.deleted"},
     async({event})=>{
         const {id}=event.data;
-     
         await User.findByIdAndDelete(id);
     }
 )
