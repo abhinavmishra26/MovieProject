@@ -16,7 +16,6 @@ const syncUserCreation=inngest.createFunction(
             image:image_url
         }
         await User.create(userData);
-
     }
 )
 
@@ -25,7 +24,8 @@ const  syncUserDeletion=inngest.createFunction(
     {event:'clerk/user.deleted'},
     async({event})=>{
         const {id}=event.data
-        await User.findByIdAndDelete(id);
+        // await User.findByIdAndDelete(id);
+        await User.findOneAndDelete({ _id: id });
     }
 )
 
