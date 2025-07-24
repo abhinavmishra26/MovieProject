@@ -3,6 +3,7 @@ import User from "../model/User.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "movie-reservation-app" });
 
+
 const syncUserCreation=inngest.createFunction(
     {id:'sync-user-from-client'},
     {event:'clerk/user.created'},
@@ -18,7 +19,6 @@ const syncUserCreation=inngest.createFunction(
 
     }
 )
-
 
 const  syncUserDeletion=inngest.createFunction(
     {id:'delete-user-with-clerk'},
